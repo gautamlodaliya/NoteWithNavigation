@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 
 import com.aashirwadinfotech.notewithnavigation.R
 import com.aashirwadinfotech.notewithnavigation.database.ui.Note
@@ -24,7 +25,7 @@ class AddNoteFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        button_done.setOnClickListener {
+        button_done.setOnClickListener {view ->
             val noteTitle = et_title.text.toString().trim()
             val noteBody = et_note.text.toString().trim()
 
@@ -44,6 +45,9 @@ class AddNoteFragment : BaseFragment() {
                 context?.let {
                     NoteDatabase(it).getNoteDao().addNote(note)
                     it.toast("Note Saved")
+
+                    val action = AddNoteFragmentDirections.actionSaveNote()
+                    Navigation.findNavController(view).navigate(action)
                 }
             }
 //            saveNote(note)
